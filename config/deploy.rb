@@ -3,31 +3,34 @@ set :application, "chef_rails_template"
 
 require 'capistrano_colors'
 require "bundler/capistrano"
-require "rvm/capistrano"
+#require "rvm/capistrano"
 
 # rvm
-set :rvm_ruby_string, '1.9.3'
-set :rvm_type, :system
+#set :rvm_ruby_string, '1.9.3'
+#set :rvm_type, :system
+
+# rbenv
+require 'capistrano-rbenv'
+set :rbenv_ruby_version, '2.0.0-p0'
 
 # リポジトリ
 set :scm, :git
 set :repository, "git://github.com/ntaku/chef_rails_template.git"
+set :repository, "/home/vagrant/works/chef_rails_template"
+set :deploy_via,  :copy
 set :branch, "master"
-set :deploy_via, :remote_cache
 set :deploy_to, "/var/www/#{application}"
 set :rails_env, "production"
 
 # SSH
 set :user, "vagrant"
-ssh_options[:keys] = ["/Users/ntaku/.vagrant.d/insecure_private_key"]
-ssh_options[:auth_methods] = ["publickey"]
-ssh_options[:forward_agent] = true
+ssh_options[:keys] = ["#{ENV['HOME']}/.ssh/insecure_private_key"]
 default_run_options[:pty] = true
 
 # デプロイ先
-role :web, "192.168.50.12"
-role :app, "192.168.50.12"
-role :db, "192.168.50.12", :primary => true
+role :web, "192.168.50.11"
+role :app, "192.168.50.11"
+role :db, "192.168.50.11", :primary => true
 
 # precompile
 load 'deploy/assets'
