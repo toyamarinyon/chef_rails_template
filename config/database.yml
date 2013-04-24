@@ -3,7 +3,7 @@ base: &base
   encoding: utf8
   reconnect: false
   username: root
-  password: test
+  password: s03129777
   socket: /tmp/mysql.sock
   pool: 5
 
